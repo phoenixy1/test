@@ -1,0 +1,82 @@
+﻿{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "{version}",
+    "title": "Sample API with anyOf and oneOf"
+  },
+  "paths": {
+    "/test": {
+      "put": {
+        "description": "demonstrate that a schema which uses anyOf renders an example that only contains contents from the anyOf",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Test"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Test2"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Test": {
+        "description": "Provides basic ID info about a member with an href to to full object",
+        "readOnly": true,
+        "anyOf": [
+          {
+            "type": "object",
+            "properties": {
+              "onlyThisIsShowing": {
+                "type": "string",
+                "example": "only anyOf schema is used for example"
+              }
+            }
+          }
+        ],
+        "properties": {
+          "test": {
+            "type": "string",
+            "example": "should be shown"
+          }
+        }
+      },
+      "Test2": {
+        "description": "Provides basic ID info about a member with an href to to full object",
+        "readOnly": true,
+        "oneOf": [
+          {
+            "type": "object",
+            "properties": {
+              "onlyThisIsShowing": {
+                "type": "string",
+                "example": "only OneOf schema is used for example"
+              }
+            }
+          }
+        ],
+        "properties": {
+          "test": {
+            "type": "string",
+            "example": "should be shown"
+          }
+        }
+      }
+    }
+  }
+}
